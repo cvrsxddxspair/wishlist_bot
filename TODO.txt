@@ -1,0 +1,50 @@
+Таблица
+
+user {
+    user_id (INTEGER PRIMARY KEY) - ID пользователя в Telegram
+    username (TEXT) - имя пользователя
+    first_name (TEXT) - имя
+    last_name (TEXT) - фамилия
+    registration_date (TIMESTAMP) - дата регистрации
+}
+
+reservation {
+    reservation_id (INTEGER PRIMARY KEY AUTOINCREMENT)
+    wish_id (INTEGER) - ID желания
+    user_id (INTEGER) - ID пользователя, который резервирует
+    reserved_at (TIMESTAMP) - дата резервирования
+    status (TEXT) - статус (reserved, cancelled, fulfilled)
+    FOREIGN KEY (wish_id) REFERENCES wishe(wish_id)
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+}
+
+group_member {
+    id (INTEGER PRIMARY KEY AUTOINCREMENT)
+    group_id (INTEGER) - ID группы
+    user_id (INTEGER) - ID пользователя
+    FOREIGN KEY (group_id) REFERENCES group(group_id)
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+}
+
+group {
+    group_id (INTEGER PRIMARY KEY) - ID группы в Telegram
+    title (TEXT) - название группы
+    description (TEXT) - описание группы
+}
+
+wish {
+    wish_id (INTEGER PRIMARY KEY AUTOINCREMENT) - уникальный ID желания
+    user_id (INTEGER) - ID пользователя, создавшего желание
+    chat_id (INTEGER) - ID чата, в котором создано желание
+    wish_text (TEXT) - текст желания
+    description (TEXT) - дополнительное описание
+    status (TEXT) - статус (например: active, completed, cancelled, deleted)
+    priority (INTEGER) - приоритет (1-5)
+    create_date (TIMESTAMP) - дата создания
+    complete_date (TIMESTAMP) - дата выполнения
+    image_url (TEXT) - ссылка на изображение (если есть)
+    price (REAL) - примерная стоимость (если указана)
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+}
+
+
